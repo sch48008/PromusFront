@@ -5,7 +5,7 @@ angular.module("restServiceModule", [])
         var url = 'https://promus-backend-bitflipper86.c9users.io/api/AppUsers';
 
         // register a new user
-        appUserRest.post = function(newUserData) {
+        appUserRest.register = function(newUserData) {
             return $http({
                 url: url,
                 method: 'POST',

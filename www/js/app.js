@@ -3,7 +3,7 @@
 // The first parameter 'promus' is the name of the main angular module for this application.
 // The 2nd parameter is an array of 'requires' which will include vendor modules and custom modules that we construct.
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'])
+angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule', 'ssfAlerts'])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       if (window.cordova && window.cordova.plugins.Keyboard) {
