@@ -1,4 +1,4 @@
-angular.module("restServiceModule", [])
+angular.module("restServiceModule")
     .service('appUserRest', ['$http', function($http) {
 
         var appUserRest = this;
