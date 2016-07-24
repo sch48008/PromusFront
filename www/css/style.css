@@ -1,3 +1,14 @@
 .has-errors {
   border: 1px solid red;
 }
+
+.icon-small {
+    font-size: 28px;
+    vertical-align: middle;
+}
+
+
+.icon-medium {
+    font-size: 36px;
+    vertical-align: middle;
+}
