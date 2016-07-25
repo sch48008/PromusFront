@@ -4,11 +4,6 @@ angular.module('promusControllerModule')
 
 
             $scope.user = {};
-            $scope.contactMethods = {
-                    Email: "email",
-                    Phone: "phone",
-                    Text: "text"
-                };
 
 
             // $scope.showHelp = function() {
@@ -22,7 +17,7 @@ angular.module('promusControllerModule')
                 // Check validity
                 if (form.$invalid) {
 
-                    return ssfAlertsService.showAlert("Incomplete", "Some fields are missing or incorrect.  Please see below.");
+                    return ssfAlertsService.showAlert("Incomplete", "Some fields are missing or incorrect.  Please see the form for errors.");
                 }
 
                 // Check confirm password
@@ -30,17 +25,24 @@ angular.module('promusControllerModule')
                     return ssfAlertsService.showAlert("Password Mismatch", "The confirm password does not match the password. Please retype.");
                 }
 
-                ////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // This will be a 2-step process...
                 // First we will retrieve the record from the RegCodeUser table using the regCode value.  
-                // That will give us the following info:
+                // That table will give us the following values:
                 //      firmId
                 //      userType
+                //      email (used only to validate)
+                //      propertyId  (optional, used only for tenant user registration)
+                // The form will give us the following values:
+                //      firstName
+                //      lastName
+                //      phone1
+                //      phone2
                 //      email
-                //      propertyId (optional)
-                // Then we will register the user, providing all the user information.
-                // If the regCode value is not found we need to display an error message.
-                ////////////////////////////////////////////////////////////////////////////////////////////////
+                //      preferredContactMethod
+                // Then we will register the user, using the combination of user information from the regCode table and the form.
+                // Note: If the regCode value is not found we need to display an error message.
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Retrieve RegCode...
                 // regCodeUserRest.getRecordByCode($scope.user.regCode, $window.localStorage['token'])
@@ -55,7 +57,7 @@ angular.module('promusControllerModule')
                             var email = response.data[0].email;
 
                             // Check for a match in the email value
-                            if ((!email) || (0 == email.length) || (email !== $scope.user.email)) {
+                            if ((!email) || (0 == email.length) || (email.toLowerCase() !== $scope.user.email.toLowerCase())) {
                                 ssfAlertsService.showAlert("No Email Match", "The email address you entered does not match the email address on file.");
                                 return;
                             }
@@ -64,7 +66,6 @@ angular.module('promusControllerModule')
                             $scope.user.firmId = response.data[0].firmId;
                             $scope.user.userType = response.data[0].userType;
                             $scope.user.propertyId = response.data[0].propertyId;
-                            $scope.user.preferredContactMethod = response.data[0].preferredContactMethod;
 
 
 
@@ -80,6 +81,13 @@ angular.module('promusControllerModule')
                                         // store the access token and user id
                                         $window.localStorage.token = response.data.token;
                                         $window.localStorage.userId = response.data.id;
+
+                                        // store a subset of user information
+                                        // $window.localStorage.userType = response.data[0].userType;
+                                        // $window.localStorage.firmId = response.data[0].firmId;
+                                        // $window.localStorage.firstName = response.data[0].firstName;
+                                        // $window.localStorage.lastName = response.data[0].lastName;
+                                        // $window.localStorage.preferredContactMethod = response.data[0].preferredContactMethod;
 
                                         // take user to the lobby
                                         $state.go('lobby');

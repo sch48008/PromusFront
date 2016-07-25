@@ -26,17 +26,42 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
     $stateProvider
       .state('login', {
         url: '/',
-        templateUrl: 'templates/login.html',
+        templateUrl: 'templates/common/login.html',
         controller: 'loginCtrl'
       })
       .state('register', {
         url: '/register',
-        templateUrl: 'templates/register.html',
+        templateUrl: 'templates/common/register.html',
         controller: 'registerCtrl'
       })
       .state('lobby', {
         url: '/lobby',
-        templateUrl: 'templates/lobby.html',
+        templateUrl: 'templates/common/lobby.html',
         controller: 'lobbyCtrl'
-      });
+      })
+      .state('admin', {
+        url: '/admin',
+        templateUrl: 'templates/admin/admin.html',
+        controller: 'adminCtrl'
+      })
+      .state('codeFirm', {
+        url: '/admin/codeFirm',
+        templateUrl: 'templates/admin/codeFirm.html',
+        controller: 'adminCtrl'
+      })      
+      .state('lead', {
+        url: '/lead',
+        templateUrl: 'templates/lead/lead.html',
+        controller: 'leadCtrl'
+      })
+      .state('manager', {
+        url: '/manager',
+        templateUrl: 'templates/manager/manager.html',
+        controller: 'managerCtrl'
+      })
+      .state('tenant', {
+        url: '/tenant',
+        templateUrl: 'templates/tenant/tenant.html',
+        controller: 'tenantCtrl'
+      });      
   });

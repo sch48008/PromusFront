@@ -86,31 +86,20 @@
             
             
             <!--row 8-->
-            <!--<div class="row padding">-->
-            <!--    <div class="col col-50 padding">-->
-            <!--        Preferred contact method:-->
-            <!--    </div>-->
-            <!--    <div class="col col-50 padding">-->
-            <!--        <select ng-model="user.preferredContactMethod" >-->
-            <!--          <option value="" disabled ng-selected = true>Select method...</option>-->
-            <!--          <option>Email</option>-->
-            <!--          <option>Phone</option>-->
-            <!--          <option>Text</option>-->
-            <!--        </select>-->
-            <!--    </div>-->
-            <!--</div>   -->
-            
             <div class="row padding">
                 <div class="col col-50 padding">
                     Preferred contact method:
                 </div>
                 <div class="col col-50 padding">
-                    <select ng-model="user.preferredContactMethod" ng-options="x for (x, y) in contactMethods">
+                    <select ng-model="user.preferredContactMethod" >
+                      <option value="" disabled ng-selected = true>Select method...</option>
+                      <option value="email">Email</option>
+                      <option value="phone">Phone</option>
+                      <option value="text">Text</option>
                     </select>
                 </div>
-            </div>               
-            
-            
+            </div>   
+
             <!--row 9-->
             <div class="row padding">
                 <div class="col col-50 padding">

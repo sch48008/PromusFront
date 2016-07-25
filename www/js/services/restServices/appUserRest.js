@@ -5,11 +5,11 @@ angular.module("restServiceModule")
         var url = 'https://promus-backend-bitflipper86.c9users.io/api/AppUsers';
 
         // register a new user
-        appUserRest.register = function(newUserData) {
+        appUserRest.register = function(userData) {
             return $http({
                 url: url,
                 method: 'POST',
-                data: newUserData
+                data: userData
             });
         };
 
@@ -21,6 +21,17 @@ angular.module("restServiceModule")
                 data: loginData
             });
         };
+        
+        
+        // get user by id
+        appUserRest.getUserById = function(userId) {
+            return $http({
+                url: url,
+                method: 'GET',
+                params: {id: userId}
+            });
+        };        
+        
 
         // logout - TODO: not yet implemented in controller
         appUserRest.logout = function(token) {
@@ -32,6 +43,4 @@ angular.module("restServiceModule")
                 }
             });
         };
-
-
     }]);
