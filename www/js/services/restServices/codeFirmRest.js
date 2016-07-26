@@ -3,39 +3,25 @@ angular.module("restServiceModule")
 
         var codeFirmRest = this;
         var url = 'https://promus-backend-bitflipper86.c9users.io/api/RegCodeFirms';
+        
+        
+        // get registration record by registration code, requires a token
+        codeFirmRest.getRecordByCode = function(regCode, token) {
+            var filter = "?filter[where][regCode]=" + regCode;
+            return $http({
+            url: url + filter,
+                method: 'GET',
+                headers: {'Authorization': token }  
+            });            
+        };        
 
-        // register a new user
-        codeFirmRest.create = function(codeFirm) {
+        // create a code for a firm, requires a token
+        codeFirmRest.create = function(codeFirm, token) {
             return $http({
                 url: url,
                 method: 'POST',
-                data: codeFirm
+                data: codeFirm,
+                headers: {'Authorization': token }                
             });
         };
-
-
-        
-        
-        // get user by id
-        // codeFirmRest.getUserById = function(userId) {
-        //     return $http({
-        //         url: url,
-        //         method: 'GET',
-        //         params: {id: userId}
-        //     });
-        // };        
-        
-
-        // logout - TODO: not yet implemented in controller
-        // codeFirmRest.logout = function(token) {
-        //     return $http({
-        //         url: url + "/logout",
-        //         method: "POST",
-        //         headers: {
-        //             'Authorization': token
-        //         }
-        //     });
-        // };
-        
-        
     }]);

@@ -1,0 +1,68 @@
+<ion-view view-title="Code for User">
+    <ion-content class="padding">
+        <form name="codeForm" ng-submit="createCode(codeForm)" novalidate>
+            
+            <!--row 1-->
+            <div class="row padding">
+                <div class="col col-100 padding">
+                    Select the user's firm and user type. 
+                </div>
+            </div>
+            
+            <!--row 2-->
+            <div class="row padding">
+                <div class="col col-100 padding">
+                    Enter the user's email, generate new code, and submit.
+                </div>
+            </div>            
+            
+            <!--row 3-->
+            <div class="row padding">
+                <div class="col col-50 padding">
+                </div>
+                <div class="col col-50 padding">
+                    <select ng-model="codeUser.userType" >
+                      <option value="" disabled ng-selected = true>Select user type...</option>
+                      <option value="lead" ng-show="isLead">Lead</option>
+                      <option value="manager" ng-show="isLead">Manager</option>
+                      <option value="tenant" ng-show="isManager">Tenant</option>
+                    </select>
+                </div>
+            </div>
+            
+
+            <!--row 2-->
+            <div class="row padding">
+                <div class="col col-100 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerForm.email.$invalid && registerForm.$submitted}">
+                    <input name="email" type="email" placeholder="Email" ng-model="codeUser.email" required>
+                    </label>
+                </div>
+            </div>
+
+
+            <!--row 3-->
+            <div class="row padding">
+                <div class="col col-50 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : codeForm.password.$invalid && codeForm.$submitted}">
+                    <input name="code" type="text" ng-readonly=true placeholder="Code" ng-model="codeUser.regCode" required>
+                    </label>
+                </div>
+                <div class="col col-50 padding">
+                    <button type="button" class="button button-positive button-small" ng-click="generateCode()">
+                    Generate
+                    </button>
+                </div>
+            </div>
+
+            <!--row 4-->
+            <div class="row padding">
+                <div class="col col-50 padding">
+                    <input type="submit" value="Submit" class="button button-positive">
+                </div>
+                <div class="col col-50 padding">
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

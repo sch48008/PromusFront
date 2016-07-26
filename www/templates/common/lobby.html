@@ -4,16 +4,16 @@
         Logout
       </button>
     </ion-nav-buttons>  <ion-content class="padding">
-    <button class="button button-block button-positive" ui-sref='admin'>
+    <button class="button button-block button-positive" ui-sref='admin' ng-show="isAdmin">
         SSF Admin
     </button>
-    <button class="button button-block button-positive" ui-sref='lead'>
+    <button class="button button-block button-positive" ui-sref='lead' ng-show="isLead">
         Lead Functions
     </button>
-    <button class="button button-block button-positive" ui-sref='manager'>
+    <button class="button button-block button-positive" ui-sref='manager' ng-show="isManager">
         Manager Functions
     </button>
-    <button class="button button-block button-positive" ui-sref='tenant'>
+    <button class="button button-block button-positive" ui-sref='tenant' ng-show="isTenant">
         Tenant Services
     </button>        
   </ion-content>

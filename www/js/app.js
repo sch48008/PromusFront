@@ -47,8 +47,13 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
       .state('codeFirm', {
         url: '/admin/codeFirm',
         templateUrl: 'templates/admin/codeFirm.html',
-        controller: 'adminCtrl'
-      })      
+        controller: 'codeFirmCtrl'
+      })
+      .state('codeUser', {
+        url: '/common/codeUser',
+        templateUrl: 'templates/common/codeUser.html',
+        controller: 'codeUserCtrl'
+      })            
       .state('lead', {
         url: '/lead',
         templateUrl: 'templates/lead/lead.html',
