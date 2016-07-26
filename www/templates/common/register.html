@@ -3,7 +3,7 @@
         <form name="registerForm" ng-submit="signupForm(registerForm)" novalidate>
 
             <!--row 1-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-50 padding">
                     Enter registration code:
                 </div>
@@ -17,7 +17,7 @@
 
 
             <!--row 2-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-50 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.email.$invalid && registerForm.$submitted}">
                     <input name="registrationCode" type="text" placeholder="Registration Code" ng-model="user.regCode" required>
@@ -29,7 +29,7 @@
             </div>
 
             <!--row 3-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-100 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.firstName.$invalid && registerForm.$submitted}">
                     <input name="firstName" type="text" placeholder="First Name" ng-model="user.firstName" required>
@@ -38,7 +38,7 @@
             </div>
 
             <!--row 4-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-100 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.lastName.$invalid && registerForm.$submitted}">
                     <input name="lastName" type="text" placeholder="Last Name" ng-model="user.lastName" required>
@@ -47,7 +47,7 @@
             </div>
 
             <!--row 5-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-50 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.firstName.$invalid && registerForm.$submitted}">
                     <input name="phone1" type="text" placeholder="Phone #1" ng-model="user.phone1" required>
@@ -61,7 +61,7 @@
             </div>
 
             <!--row 6-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-100 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.email.$invalid && registerForm.$submitted}">
                     <input name="email" type="email" placeholder="Email" ng-model="user.email" required>
@@ -71,7 +71,7 @@
 
 
             <!--row 7-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-50 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.password.$invalid && registerForm.$submitted}">
                     <input name="password" type="password" placeholder="Password" ng-model="user.password" required>
@@ -83,27 +83,47 @@
                     </label>
                 </div>
             </div>
-            
-            
+
+
             <!--row 8-->
-            <div class="row padding">
-                <div class="col col-50 padding">
-                    Preferred contact method:
+            <div class="row">
+                <div class="col col-100 padding">
+                    <div class="list">
+                        <label class="item item-input item-select">
+                        <div class="input-label">
+                        Preferred contact method:
+                        </div>
+                        <select ng-model="user.preferredContactMethod">
+                        <option value="" disabled ng-selected = true>Select...</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <option value="text">Text Message</option>
+                        </select>
+                        </label>
+                    </div>
                 </div>
-                <div class="col col-50 padding">
-                    <select ng-model="user.preferredContactMethod" >
-                      <option value="" disabled ng-selected = true>Select method...</option>
-                      <option value="email">Email</option>
-                      <option value="phone">Phone</option>
-                      <option value="text">Text</option>
-                    </select>
-                </div>
-            </div>   
+            </div>
+                        
+
+            <!--row 8 alternate keep just in case-->
+            <!--<div class="row">-->
+            <!--    <div class="col col-50 padding">-->
+            <!--        Preferred contact method:-->
+            <!--    </div>-->
+            <!--    <div class="col col-50 padding">-->
+            <!--        <select ng-model="user.preferredContactMethod">-->
+            <!--          <option value="" disabled ng-selected = true>Select method...</option>-->
+            <!--          <option value="email">Email</option>-->
+            <!--          <option value="phone">Phone</option>-->
+            <!--          <option value="text">Text</option>-->
+            <!--        </select>-->
+            <!--    </div>-->
+            <!--</div>-->
 
             <!--row 9-->
-            <div class="row padding">
+            <div class="row">
                 <div class="col col-50 padding">
-                    <input type="submit" value="Register" class="button button-positive">
+                    <input type="submit" value="Register" class="button button-block button-positive">
                 </div>
                 <div class="col col-50 padding">
                 </div>

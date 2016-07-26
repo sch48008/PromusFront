@@ -1,6 +1,6 @@
 angular.module('promusControllerModule')
-    .controller('registerCtrl', ['$scope', '$state', '$window', 'appUserRest', 'regCodeUserRest', 'ssfAlertsService',
-        function($scope, $state, $window, appUserRest, regCodeUserRest, ssfAlertsService) {
+    .controller('registerCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'ssfAlertsService',
+        function($scope, $state, $window, appUserRest, codeUserRest, ssfAlertsService) {
 
 
             $scope.user = {};
@@ -45,8 +45,7 @@ angular.module('promusControllerModule')
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Retrieve RegCode...
-                // regCodeUserRest.getRecordByCode($scope.user.regCode, $window.localStorage['token'])
-                regCodeUserRest.getRecordByCode($scope.user.regCode)
+                codeUserRest.getRecordByCode($scope.user.regCode)
                     .then(function(response) {
 
                         // handle different responses and decide what happens next...

@@ -20,7 +20,7 @@ angular.module("restServiceModule")
                 url: url,
                 method: 'POST',
                 data: codeUser,
-                headers: {'Authorization': token }                
+                params: {access_token: token}                
             });
         };        
 
