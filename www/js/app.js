@@ -29,11 +29,26 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         templateUrl: 'templates/common/login.html',
         controller: 'loginCtrl'
       })
-      .state('register', {
-        url: '/register',
-        templateUrl: 'templates/common/register.html',
-        controller: 'registerCtrl'
+        .state('register-user', {
+        url: '/register-user',
+        templateUrl: 'templates/common/registerUser.html',
+        controller: 'registerUserCtrl'
       })
+      .state('register-firm', {
+        url: '/register-firm',
+        templateUrl: 'templates/lead/registerFirm.html',
+        controller: 'registerFirmCtrl'
+      })            
+      .state('code-firm', {
+        url: '/admin/code-firm',
+        templateUrl: 'templates/admin/codeFirm.html',
+        controller: 'codeFirmCtrl'
+      })
+      .state('code-user', {
+        url: '/common/code-user',
+        templateUrl: 'templates/common/codeUser.html',
+        controller: 'codeUserCtrl'
+      })                        
       .state('lobby', {
         url: '/lobby',
         templateUrl: 'templates/common/lobby.html',
@@ -44,16 +59,6 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         templateUrl: 'templates/admin/admin.html',
         controller: 'adminCtrl'
       })
-      .state('codeFirm', {
-        url: '/admin/codeFirm',
-        templateUrl: 'templates/admin/codeFirm.html',
-        controller: 'codeFirmCtrl'
-      })
-      .state('codeUser', {
-        url: '/common/codeUser',
-        templateUrl: 'templates/common/codeUser.html',
-        controller: 'codeUserCtrl'
-      })            
       .state('lead', {
         url: '/lead',
         templateUrl: 'templates/lead/lead.html',
@@ -70,3 +75,7 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         controller: 'tenantCtrl'
       });      
   });
+  
+
+      
+      

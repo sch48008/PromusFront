@@ -11,7 +11,7 @@ angular.module("restServiceModule")
             return $http({
             url: url + filter,
                 method: 'GET',
-                headers: {'Authorization': token }  
+                params: {access_token: token}                
             });            
         };        
 
@@ -21,7 +21,7 @@ angular.module("restServiceModule")
                 url: url,
                 method: 'POST',
                 data: codeFirm,
-                headers: {'Authorization': token }                
+                params: {access_token: token}                
             });
         };
     }]);

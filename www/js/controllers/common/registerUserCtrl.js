@@ -1,15 +1,14 @@
 angular.module('promusControllerModule')
-    .controller('registerCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'ssfAlertsService',
+    .controller('registerUserCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'ssfAlertsService',
         function($scope, $state, $window, appUserRest, codeUserRest, ssfAlertsService) {
 
 
             $scope.user = {};
 
-
+            // save for verbiage
             // $scope.showHelp = function() {
             //     ssfAlertsService.showAlert("Registration Code", "Your registration code should have been provided to you by your Property Manager." +
             //         "If you do not have one please contact your Property Manager at the phone number at top right.");
-
             // };
 
             $scope.signupForm = function(form) {

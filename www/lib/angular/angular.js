@@ -2177,7 +2177,7 @@ function setupModuleLoader(window) {
            * See {@link ng.$animateProvider#register $animateProvider.register()} and
            * {@link ngAnimate ngAnimate module} for more information.
            */
-          animation: invokeLaterAndSetModuleName('$animateProvider', 'register'),
+          animation: invokeLaterAndSetModuleName('$animateProvider', 'register-user'),
 
           /**
            * @ngdoc method
@@ -2195,7 +2195,7 @@ function setupModuleLoader(window) {
            * (`myapp_subsection_filterx`).
            * </div>
            */
-          filter: invokeLaterAndSetModuleName('$filterProvider', 'register'),
+          filter: invokeLaterAndSetModuleName('$filterProvider', 'register-user'),
 
           /**
            * @ngdoc method
@@ -2207,7 +2207,7 @@ function setupModuleLoader(window) {
            * @description
            * See {@link ng.$controllerProvider#register $controllerProvider.register()}.
            */
-          controller: invokeLaterAndSetModuleName('$controllerProvider', 'register'),
+          controller: invokeLaterAndSetModuleName('$controllerProvider', 'register-user'),
 
           /**
            * @ngdoc method

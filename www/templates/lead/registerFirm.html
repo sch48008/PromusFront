@@ -1,0 +1,150 @@
+<ion-view view-title="Register Firm">
+    <ion-content class="padding">
+        <form name="registerFirm" ng-submit="register(registerFirm)" novalidate>
+
+            <!--row 1-->
+            <div class="row">
+                <div class="col col-50 padding">
+                    Enter registration code:
+                </div>
+                <div class="col col-50 text-right padding">
+                    <span>
+                    <i class="icon ion-android-call icon-small padding positive"></i>
+                    619-805-7746
+                    </span>
+                </div>
+            </div>
+
+
+            <!--registration code-->
+            <div class="row">
+                <div class="col col-50 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.registrationCode.$invalid && registerFirm.$submitted}">
+                    <input name="registrationCode" type="text" placeholder="Registration Code" ng-model="firm.regCode" required>
+                    </label>
+                </div>
+                <div class="col col-50 padding">
+                    <i class="icon ion-help-circled icon-medium padding-left positive"></i>
+                </div>
+            </div>
+
+            <!--firm name-->
+            <div class="row">
+                <div class="col col-100 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.firmName.$invalid && registerFirm.$submitted}">
+                    <input name="firmName" type="text" placeholder="Firm Name" ng-model="firm.name" required>
+                    </label>
+                </div>
+            </div>
+            
+            
+            <!--country-->
+            <div class="row">
+                <div class="col col-100 padding">
+                    <div class="list">
+                        <label class="item item-input item-select" ng-class="{ 'has-errors' : registerFirm.selectCountry.$invalid && registerFirm.$submitted}">
+                        <div class="input-label">
+                        Country:
+                        </div>
+                        <select name= "selectCountry" ng-model="firm.country" ng-options="country as country.name for country in countries track by country.code" required>
+                            <option value="" disabled ng-selected = true>Select country...</option>  
+                        </select>   
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--country-->
+            <!--<div class="row">-->
+            <!--    <div class="col col-100 padding">-->
+            <!--        <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.selectCountry.$invalid && registerFirm.$submitted}">-->
+            <!--            <select name= "selectCountry" ng-model="firm.country" ng-options="country as country.name for country in countries track by country.code" required>-->
+            <!--                <option value="" disabled ng-selected = true>Select country...</option>  -->
+            <!--            </select>                                  -->
+            <!--      </label>-->
+            <!--    </div>-->
+            <!--</div>-->
+            
+  
+
+            <!--state-->
+            <div class="row"   ng-show="firm.country.code == 'US'">
+                <div class="col col-100 padding">
+                    <div class="list">
+                        <label class="item item-input item-select" ng-class="{ 'has-errors' : registerFirm.selectState.$invalid && registerFirm.$submitted}">
+                        <div class="input-label">
+                        State:
+                        </div>
+                        <select name= "selectState" ng-model="firm.state" ng-options="state as state.name for state in states track by state.code">
+                            <option value="" disabled ng-selected = true>Select state...</option>  
+                        </select>      
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!--state-->
+            <!--<div class="row"  ng-show="firm.country.code == 'US'">-->
+            <!--    <div class="col col-100 padding">-->
+            <!--        <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.selectState.$invalid && registerFirm.$submitted}">-->
+            <!--            <select name= "selectState" ng-model="firm.state" ng-options="state as state.name for state in states track by state.code">-->
+            <!--                <option value="" disabled ng-selected = true>Select state...</option>  -->
+            <!--            </select>                                  -->
+            <!--      </label>-->
+            <!--    </div>-->
+            <!--</div>-->
+
+            <!--city-->
+            <div class="row">
+                <div class="col col-100 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.city.$invalid && registerFirm.$submitted}">
+                    <input name="city" type="text" placeholder="City" ng-model="firm.city" required>
+                    </label>
+                </div>
+            </div>
+
+            <!--address1-->
+            <div class="row">
+                <div class="col col-100 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.address1.$invalid && registerFirm.$submitted}">
+                    <input name="address1" type="text" placeholder="Address 1" ng-model="firm.address1" required>
+                    </label>
+                </div>
+            </div>
+
+            <!--address2-->
+            <div class="row">
+                <div class="col col-100 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.address2.$invalid && registerFirm.$submitted}">
+                    <input name="address2" type="text" placeholder="Address 2" ng-model="firm.address2">
+                    </label>
+                </div>
+            </div>
+
+            <!--zip-->
+            <div class="row">
+                <div class="col col-50 padding">
+                    <label class="item item-input" ng-class="{ 'has-errors' : registerFirm.zip.$invalid && registerFirm.$submitted}">
+                    <input name="zip" type="text" placeholder="Zip" ng-model="firm.zip" required>
+                    </label>
+                </div>
+                <div class="col col-50 padding">
+                    <input type="submit" value="Register" class="button button-block button-positive">
+                </div>
+            </div>
+
+
+            <!--button-->
+            <!--<div class="row">-->
+            <!--    <div class="col col-50 padding">-->
+            <!--        <input type="submit" value="Register" class="button button-block button-positive">-->
+            <!--    </div>-->
+            <!--    <div class="col col-50 padding">-->
+            <!--    </div>-->
+            <!--</div>-->
+
+        </form>
+    </ion-content>
+</ion-view>
