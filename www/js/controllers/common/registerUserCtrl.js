@@ -1,15 +1,34 @@
 angular.module('promusControllerModule')
-    .controller('registerUserCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'ssfAlertsService',
-        function($scope, $state, $window, appUserRest, codeUserRest, ssfAlertsService) {
+    .controller('registerUserCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'firmRest', 'propertyRest', 'ssfAlertsService',
+        function($scope, $state, $window, appUserRest, codeUserRest, firmRest, propertyRest, ssfAlertsService) {
 
-
+            // holds main user data
             $scope.user = {};
+            
+            // holds temporary data
+            $scope.temp = {};            
 
-            // save for verbiage
-            // $scope.showHelp = function() {
-            //     ssfAlertsService.showAlert("Registration Code", "Your registration code should have been provided to you by your Property Manager." +
-            //         "If you do not have one please contact your Property Manager at the phone number at top right.");
-            // };
+            // function to be used in welcome message - (not yet used)
+            $scope.getFirmName = function(){
+                firmRest.getFirmById($scope.user.firmId)
+                    .then(function(response) {
+                        if (response.status == 200) {
+                            var firm = response.data[0];
+                            return firm.name;
+                        }else{
+                            ssfAlertsService.showAlert("Unknown Error", "Attempt to get firm name failed. Response status is: " + response.status);
+                        }
+                    }, function(error) {
+                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
+                    });
+            };
+            
+      
+
+            // Save this verbiage:
+            // "Your registration code should have been provided to you by your Property Manager." +
+            // "If you do not have one please contact your Property Manager at the phone number at top right."
+            
 
             $scope.signupForm = function(form) {
 
@@ -20,7 +39,7 @@ angular.module('promusControllerModule')
                 }
 
                 // Check confirm password
-                if ($scope.user.confirmPassword !== $scope.user.password) {
+                if ($scope.temp.confirmPassword !== $scope.user.password) {
                     return ssfAlertsService.showAlert("Password Mismatch", "The confirm password does not match the password. Please retype.");
                 }
 
@@ -44,7 +63,7 @@ angular.module('promusControllerModule')
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Retrieve RegCode...
-                codeUserRest.getRecordByCode($scope.user.regCode)
+                codeUserRest.getRecordByCode($scope.temp.regCode)
                     .then(function(response) {
 
                         // handle different responses and decide what happens next...
@@ -56,14 +75,16 @@ angular.module('promusControllerModule')
 
                             // Check for a match in the email value
                             if ((!email) || (0 == email.length) || (email.toLowerCase() !== $scope.user.email.toLowerCase())) {
-                                ssfAlertsService.showAlert("No Email Match", "The email address you entered does not match the email address on file.");
+                                ssfAlertsService.showAlert("No Email Match", "The email address you entered does not match the email address we have on file.");
                                 return;
                             }
 
                             // transfer these values...
                             $scope.user.firmId = response.data[0].firmId;
                             $scope.user.userType = response.data[0].userType;
-                            $scope.user.propertyId = response.data[0].propertyId;
+                            
+                            // todo - need to add a record to the TenantProperty table (not AppUser table)
+                            // $scope.user.propertyId = response.data[0].propertyId;
 
 
 
@@ -80,15 +101,17 @@ angular.module('promusControllerModule')
                                         $window.localStorage.token = response.data.token;
                                         $window.localStorage.userId = response.data.id;
 
-                                        // store a subset of user information
-                                        // $window.localStorage.userType = response.data[0].userType;
-                                        // $window.localStorage.firmId = response.data[0].firmId;
-                                        // $window.localStorage.firstName = response.data[0].firstName;
-                                        // $window.localStorage.lastName = response.data[0].lastName;
-                                        // $window.localStorage.preferredContactMethod = response.data[0].preferredContactMethod;
+                                        // todo: store a subset of user information, just as we do when the user logs in
+
+                                        
+                                        
+                                        // prepare welcome message - for now just show this
+                                        ssfAlertsService.showAlert("Success!", "Welcome " + $scope.user.firstName + 
+                                        "!  You have been registered with the Promus application with user type: " + $scope.user.userType + "." );
 
                                         // take user to the lobby
                                         $state.go('lobby');
+                                        
                                     }
                                     else if (response.status == 422) {
                                         ssfAlertsService.showAlert("Email Already Exists", "Sorry, that email value is already registered.");

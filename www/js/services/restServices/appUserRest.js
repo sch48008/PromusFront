@@ -24,11 +24,13 @@ angular.module("restServiceModule")
         
         
         // get user by id
-        appUserRest.getUserById = function(userId) {
+        appUserRest.getUserById = function(id, token) {
+            var filter = "?filter[where][id]=" + id;            
+            
             return $http({
-                url: url,
+                url: url + filter,
                 method: 'GET',
-                params: {id: userId}
+                headers: {'Authorization': token }
             });
         };        
         

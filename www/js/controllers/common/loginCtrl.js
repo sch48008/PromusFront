@@ -26,7 +26,7 @@ angular.module('promusControllerModule')
 
 
                                 // we also need to get the user model instance and store some user info locally
-                                appUserRest.getUserById($window.localStorage.userId)
+                                appUserRest.getUserById($window.localStorage.userId, $window.localStorage.token)
                                     .then(function(response) {
 
                                         // handle different responses and decide what happens next...
@@ -40,6 +40,7 @@ angular.module('promusControllerModule')
                                             $window.localStorage.firstName = response.data[0].firstName;
                                             $window.localStorage.lastName = response.data[0].lastName;
                                             $window.localStorage.preferredContactMethod = response.data[0].preferredContactMethod;
+                                            
 
                                             // take user to the lobby
                                             $state.go('lobby');

@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col col-50 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.registrationCode.$invalid && registerForm.$submitted}">
-                    <input name="registrationCode" type="text" placeholder="Registration Code" ng-model="user.regCode" required>
+                    <input name="registrationCode" type="text" placeholder="Registration Code" ng-model="temp.regCode" required>
                     </label>
                 </div>
                 <div class="col col-50 padding">
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col col-50 padding">
                     <label class="item item-input" ng-class="{ 'has-errors' : registerForm.confirmPassword.$invalid && registerForm.$submitted}">
-                    <input name="confirmPassword" type="password" placeholder="Confirm Password" ng-model="user.confirmPassword" required>
+                    <input name="confirmPassword" type="password" placeholder="Confirm Password" ng-model="temp.confirmPassword" required>
                     </label>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                     <div class="list">
                         <label class="item item-input item-select" ng-class="{ 'has-errors' : registerForm.selectContactMethod.$invalid && registerForm.$submitted}">
                         <div class="input-label">
-                        Preferred contact method:
+                        Preferred contact method
                         </div>
                         <select name= "selectContactMethod" ng-model="user.preferredContactMethod" required>
                         <option value="" disabled ng-selected = true>Select...</option>

@@ -22,6 +22,15 @@ angular.module("restServiceModule")
                 method: 'GET',
                 params: {access_token: token}
             });
-        };         
+        };
+        
+        // get firm given id
+        firmRest.getFirmById = function(id, token) {
+            return $http({
+                url: url,
+                method: 'GET',
+                params: {access_token: token, id: id}
+            });
+        };        
         
     }]);

@@ -64,6 +64,11 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         templateUrl: 'templates/lead/lead.html',
         controller: 'leadCtrl'
       })
+      .state('add-property', {
+        url: '/lead/add-property',
+        templateUrl: 'templates/lead/addProperty.html',
+        controller: 'addPropertyCtrl'
+      })      
       .state('manager', {
         url: '/manager',
         templateUrl: 'templates/manager/manager.html',

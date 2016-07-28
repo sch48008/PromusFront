@@ -10,21 +10,22 @@
             </div>
 
             <!--row 2-->
-            <div class="row">
+            <div class="row" ng-show="isAdmin">
                 <div class="col col-100 padding">
                     <div class="list">
-                        <label class="item item-input item-select" ng-class="{ 'has-errors' : codeForm.selectFirm.$invalid && codeForm.$submitted}">
+                        <label class="item item-input item-select">
                         <div class="input-label">
-                        Firm:
+                        Firm
                         </div>
                         <!--take note of the syntax of the ng-options directive.  Must be exactly like this.-->
-                        <select name= "selectFirm" ng-model="codeUser.firm" ng-options="firm as firm.name for firm in firms track by firm.id" required>
+                        <select name= "selectFirm" ng-model="temp.firm" ng-options="firm as firm.name for firm in firms track by firm.id">
                             <option value="" disabled ng-selected = true>Select firm...</option>  
                         </select>
                         </label>
                     </div>
                 </div>
             </div>
+            
 
 
             <!--row 3-->
@@ -33,7 +34,7 @@
                     <div class="list">
                         <label class="item item-input item-select" ng-class="{ 'has-errors' : codeForm.selectUserType.$invalid && codeForm.$submitted}">
                         <div class="input-label">
-                        User type:
+                        User type
                         </div>
                         <select name= "selectUserType" ng-model="codeUser.userType"  required>
                           <option value="" disabled ng-selected = true>Select user type...</option>
@@ -47,15 +48,16 @@
             </div>
             
             
-            <!--row 4 todo: add validation to this control-->
+            <!--row 4 todo: add validation for this control-->
             <div class="row" ng-show="codeUser.userType == 'tenant'">
                 <div class="col col-100 padding">
                     <div class="list">
                         <label class="item item-input item-select">
                         <div class="input-label">
-                        Property:
+                        Property
                         </div>
-                        <select ng-model="codeUser.propertyId" ng-options="property.name for property in properties track by property.id" required>
+                        <select ng-model="codeUser.propertyId" ng-options="property.name for property in properties track by property.id">
+                        <option value="" disabled ng-selected = true>Select property...</option>  
                         </select>
                         </label>
                     </div>
