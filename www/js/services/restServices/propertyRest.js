@@ -24,6 +24,21 @@ angular.module("restServiceModule")
             });
         };
         
+        
+        // get properties by firm using firmId
+        propertyRest.getPropertiesByFirm = function(firmId, token) {
+            
+            // construct filter
+            var filter = "?filter[where][firmId]=" + firmId;
+            
+            return $http({
+                url: url + filter,
+                method: 'GET',
+                params: {access_token: token}
+            });
+        };
+        
+        
         // get property given id
         propertyRest.getPropertyById = function(id, token) {
             return $http({

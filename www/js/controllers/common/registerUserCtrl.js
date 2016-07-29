@@ -1,6 +1,6 @@
 angular.module('promusControllerModule')
-    .controller('registerUserCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'firmRest', 'propertyRest', 'ssfAlertsService',
-        function($scope, $state, $window, appUserRest, codeUserRest, firmRest, propertyRest, ssfAlertsService) {
+    .controller('registerUserCtrl', ['$scope', '$state', '$window', 'appUserRest', 'codeUserRest', 'firmRest', 'propertyRest', 'tenantPropertyRest', 'ssfAlertsService',
+        function($scope, $state, $window, appUserRest, codeUserRest, firmRest, propertyRest, tenantPropertyRest, ssfAlertsService) {
 
             // holds main user data
             $scope.user = {};
@@ -44,7 +44,7 @@ angular.module('promusControllerModule')
                 }
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                // This will be a 2-step process...
+                // This will be a 3-step process...
                 // First we will retrieve the record from the RegCodeUser table using the regCode value.  
                 // That table will give us the following values:
                 //      firmId
@@ -60,6 +60,10 @@ angular.module('promusControllerModule')
                 //      preferredContactMethod
                 // Then we will register the user, using the combination of user information from the regCode table and the form.
                 // Note: If the regCode value is not found we need to display an error message.
+                //
+                // Once the user is registered, if that user is of type "tenant" then the third step is to make the association
+                // between the user(the tenant) and the property.  We do this in the "TenantProperty" table.
+                // For other user types no association is made between the user and a property.
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Retrieve RegCode...
@@ -70,12 +74,19 @@ angular.module('promusControllerModule')
 
                         // if success
                         if (response.status == 200) {
+                            
+                            if(response.data.length == 0){
+                                return ssfAlertsService.showAlert("No Code Match", "Sorry, the registration code you entered does not match any codes that we have on file. " +
+                                "Please contact help at the number on the form top right.");
+                            }
 
                             var email = response.data[0].email;
+                            
 
                             // Check for a match in the email value
                             if ((!email) || (0 == email.length) || (email.toLowerCase() !== $scope.user.email.toLowerCase())) {
-                                ssfAlertsService.showAlert("No Email Match", "The email address you entered does not match the email address we have on file.");
+                                ssfAlertsService.showAlert("No Email Match", "Sorry, the email address you entered does not match the email address we have on file. " +
+                                "Please contact help at the number on the form top right.");
                                 return;
                             }
 
@@ -83,11 +94,12 @@ angular.module('promusControllerModule')
                             $scope.user.firmId = response.data[0].firmId;
                             $scope.user.userType = response.data[0].userType;
                             
-                            // todo - need to add a record to the TenantProperty table (not AppUser table)
-                            // $scope.user.propertyId = response.data[0].propertyId;
-
-
-
+                            
+                            // If the userType is tenant, capture the "propertyId" associated with the user
+                            if($scope.user.userType === "tenant"){
+                                $scope.temp.propertyId = response.data[0].propertyId;
+                            }
+                            
                             // Register...
                             appUserRest.register($scope.user)
                                 .then(function(response) {
@@ -102,8 +114,27 @@ angular.module('promusControllerModule')
                                         $window.localStorage.userId = response.data.id;
 
                                         // todo: store a subset of user information, just as we do when the user logs in
-
                                         
+
+                                        // make the association between the tenant and the property (if userType is tenant)
+                                        if($scope.user.userType === "tenant"){
+                                            
+                                            var tenantPropertyData = {"tenantId": $window.localStorage.userId, "propertyId": $scope.temp.propertyId};
+                                            
+                                            tenantPropertyRest.add(tenantPropertyData, $window.localStorage.token)
+                                                .then(function(response) {
+                                                    
+                                                    // if success
+                                                    if (response.status == 200) {
+                                                        // we don't need to do anything if this is successful, only alert if this fails
+                                                    } else {
+                                                         ssfAlertsService.showAlert("Error", "Error occurred associating tenant with property.");
+                                                    }
+                                                    
+                                                }, function(error) {
+                                                    ssfAlertsService.showAlert("Error", "Error occurred associating tenant with property. Error message is: " + error.message);
+                                                });
+                                        }                                        
                                         
                                         // prepare welcome message - for now just show this
                                         ssfAlertsService.showAlert("Success!", "Welcome " + $scope.user.firstName + 
@@ -127,8 +158,6 @@ angular.module('promusControllerModule')
                                     ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
 
                                 });
-
-
                         }
                         else if (response.status == 404) {
                             ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
@@ -137,9 +166,7 @@ angular.module('promusControllerModule')
                             ssfAlertsService.showAlert("No Server Connection", "The server appears to be offline.");
                         }
                     }, function(error) {
-
                         ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
-
                     });
             };
         }

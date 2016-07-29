@@ -1,6 +1,6 @@
 angular.module('promusControllerModule')
-    .controller('codeUserCtrl', ['$scope', '$state', '$window', '$ionicHistory', 'codeUserRest', 'firmRest', 'ssfAlertsService',
-        function($scope, $state, $window, $ionicHistory, codeUserRest, firmRest, ssfAlertsService) {
+    .controller('codeUserCtrl', ['$scope', '$state', '$window', '$ionicHistory', 'codeUserRest', 'firmRest', 'propertyRest', 'ssfAlertsService',
+        function($scope, $state, $window, $ionicHistory, codeUserRest, firmRest, propertyRest, ssfAlertsService) {
 
             // these boolean values affect which controls are visible in the template
             $scope.isAdmin = $window.localStorage['userType'] === "admin";
@@ -17,10 +17,6 @@ angular.module('promusControllerModule')
             // to hold temporary data
             $scope.temp = {};
             
-            // test function
-            // $scope.showFirm = function(){
-            //     alert("firmId = " + $scope.codeUser.firm.id);
-            // };
 
             // a method to generate a 6-digit random number
             $scope.generateCode = function() {
@@ -31,6 +27,9 @@ angular.module('promusControllerModule')
             function randomIntFromInterval(min, max) {
                 return Math.floor(Math.random() * (max - min + 1) + min);
             }
+            
+            // properties...needed in select property dropdown for tenants
+            $scope.properties = [];            
             
             // firms...needed in select firm dropdown
             $scope.firms = [];
@@ -44,11 +43,34 @@ angular.module('promusControllerModule')
                 return 0;
             }
 
-            
+            // get properties...needed in select property dropdown for tenants
+            propertyRest.getPropertiesByFirm($window.localStorage.firmId, $window.localStorage.token)
+                .then(function(response) {
+
+                    // handle different responses and decide what happens next...
+
+                    // if success
+                    if (response.status == 200) {
+                        $scope.properties = response.data;
+                        
+                        // sort
+                        $scope.properties.sort(compare);
+                    }
+                    else if (response.status == 404) {
+                        ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
+                    }
+                    else if (response.status == 500) {
+                        ssfAlertsService.showAlert("No Server Connection", "The server appears to be offline.");
+                    }
+                }, function(error) {
+
+                    ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
+
+                });            
             
             
             // properties...needed in select properties dropdown when userType...dummy for now
-            $scope.properties = [{id:"xxxx", name:"Property1"}, {id:"yyyy", name:"Property2"}, {id:"zzzz", name:"Property3"}];            
+            // $scope.properties = [{id:"xxxx", name:"Property1"}, {id:"yyyy", name:"Property2"}, {id:"zzzz", name:"Property3"}];            
 
 
             // get firms...needed in select firm dropdown
@@ -96,7 +118,7 @@ angular.module('promusControllerModule')
                         return ssfAlertsService.showAlert("Missing Firm", "You must select a firm from the select box above.");                    
                     } 
                     
-                    // assign firmId to variable and blank-out temp object.  We just need the firmId, not the entire firm.
+                    // assign firmId to variable. We just need the firmId, not the entire firm.
                     $scope.codeUser.firmId = $scope.temp.firm.id;
                 
                 
@@ -116,7 +138,10 @@ angular.module('promusControllerModule')
                     // Check that they have selected a property
                     if(!$scope.temp.property){
                         return ssfAlertsService.showAlert("Missing Property", "You must select a property from the select box above when adding a tenant.");                    
-                    }                     
+                    }
+                    
+                    // assign propertyId to variable. We just need the propertyId, not the entire property.
+                    $scope.codeUser.propertyId = $scope.temp.property.id;                    
                 }
 
                 

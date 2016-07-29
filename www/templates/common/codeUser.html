@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <!--row 2-->
+            <!--select firm-->
             <div class="row" ng-show="isAdmin">
                 <div class="col col-100 padding">
                     <div class="list">
@@ -28,7 +28,7 @@
             
 
 
-            <!--row 3-->
+            <!--select user type-->
             <div class="row">
                 <div class="col col-100 padding">
                     <div class="list">
@@ -48,7 +48,7 @@
             </div>
             
             
-            <!--row 4 todo: add validation for this control-->
+            <!--select property todo: add code validation for this control-->
             <div class="row" ng-show="codeUser.userType == 'tenant'">
                 <div class="col col-100 padding">
                     <div class="list">
@@ -56,7 +56,7 @@
                         <div class="input-label">
                         Property
                         </div>
-                        <select ng-model="codeUser.propertyId" ng-options="property.name for property in properties track by property.id">
+                        <select name= "selectProperty" ng-model="temp.property" ng-options="prop as prop.name for prop in properties track by prop.id">
                         <option value="" disabled ng-selected = true>Select property...</option>  
                         </select>
                         </label>
