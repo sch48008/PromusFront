@@ -6,7 +6,7 @@ angular.module("restServiceModule")
 
 
         // register a new task
-        taskRest.register = function(taskData, token) {
+        taskRest.create = function(taskData, token) {
             return $http({
                 url: url,
                 method: 'POST',
@@ -16,7 +16,7 @@ angular.module("restServiceModule")
         };
 
         // get all tasks
-        taskRest.getFirms = function(token) {
+        taskRest.getTasks = function(token) {
             return $http({
                 url: url,
                 method: 'GET',
@@ -25,11 +25,15 @@ angular.module("restServiceModule")
         };
         
         // get task given id
-        taskRest.getFirmById = function(id, token) {
+        taskRest.getTaskById = function(id, token) {
+            
+            // construct filter
+            var filter = "?filter[where][id]=" + id; 
+            
             return $http({
-                url: url,
+                url: url + filter,
                 method: 'GET',
-                params: {access_token: token, id: id}
+                params: {access_token: token}
             });
         };        
         

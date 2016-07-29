@@ -17,19 +17,31 @@ angular.module('promusControllerModule')
                 return Math.floor(Math.random() * (max - min + 1) + min);
             }  
             
-            // get properties...in this case we want only the properties associated with the user (tenant). Usually this is just one property.
-            tenantPropertyRest.getTenantPropertyById($window.localStorage.userId, $window.localStorage.token)
+            // get properties...in this case we want only the properties associated with the user (tenant). Usually this is just one property but may be more.
+            tenantPropertyRest.getTenantPropertiesById($window.localStorage.userId, $window.localStorage.token)
                 .then(function(response) {
                     
-                    // if success
                     if (response.status == 200) {
+                        var tenantProperties = response.data;
                         
-                        $scope.properties = response.data;
+                        // tenant may be associated with more than one property.  Add each property to the scope array.
+                        tenantProperties.forEach(function(record){
+                            propertyRest.getPropertyById(record.propertyId, $window.localStorage.token)
+                                .then(function(response) {
+                                    
+                                    if (response.status == 200) {
+                                        $scope.properties.push(response.data[0]);
+                                    } else {
+                                        ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant.");
+                                    }
+                                }, function(error) {
+                                    ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is: " + error.message);
+                                });                                
+                        });
                         
                     } else {
                          ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant.");
                     }
-                    
                 }, function(error) {
                     ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is: " + error.message);
                 });            
@@ -81,7 +93,7 @@ angular.module('promusControllerModule')
                             return ssfAlertsService.showAlert('Error', 'An error occurred creating the request. Response status code was: ' + response.status);
                         }
 
-                        ssfAlertsService.showAlert('Success', 'The request ' + $scope.request.name + ' was successfully submitted.');
+                        ssfAlertsService.showAlert('Success', 'The request \"' + $scope.request.subject + '\" was successfully submitted.');
 
                     }, function(error) {
                         ssfAlertsService.showAlert('Error', 'Error occurred creating the request. Error message is: ' + error.message);

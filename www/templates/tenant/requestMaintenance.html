@@ -5,7 +5,7 @@
             
             <!--select property -->
             <div class="row">
-                <div class="col col-100 padding" ng-class="{ 'has-errors' : requestForm.selectProperty.$invalid && requestForm.$submitted}">
+                <div class="col col-100" ng-class="{ 'has-errors' : requestForm.selectProperty.$invalid && requestForm.$submitted}">
                     <div class="list">
                         <label class="item item-input item-select">
                         <div class="input-label">
@@ -24,11 +24,11 @@
             <div class="row">
                 <div class="col col-50">
                     <label class="item item-input" ng-class="{ 'has-errors' : requestForm.unit.$invalid && requestForm.$submitted}">
-                    <input name="unit" type="text" placeholder="Unit (3A for example)" ng-model="request.unit" required>
+                    <input name="unit" type="text" placeholder="Unit (required)" ng-model="request.unit" required>
                     </label>
                 </div>
                 <div class="col col-50">
-                    <input type="button" value="Attach Photo" class="button button-block button-positive">
+                    <input type="button" value="Attach Photo" class="button button-positive">
                 </div>                                
             </div>                        
 
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col col-100">
                     <label class="item item-input" ng-class="{ 'has-errors' : requestForm.description.$invalid && requestForm.$submitted}">
-                    <textarea name="description" placeholder="Description" ng-model=request.description></textarea>
+                    <textarea style="height: 200px;" name="description" placeholder="Description (please describe in detail)" ng-model=request.description></textarea>
                     </label>
                 </div>
             </div>                        

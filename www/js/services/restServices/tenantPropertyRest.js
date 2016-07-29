@@ -25,7 +25,7 @@ angular.module("restServiceModule")
         };
         
         // get tenantProperty record(s) given user id
-        tenantPropertyRest.getTenantPropertyById = function(tenantId, token) {
+        tenantPropertyRest.getTenantPropertiesById = function(tenantId, token) {
             
             // construct filter
             var filter = "?filter[where][tenantId]=" + tenantId;            
