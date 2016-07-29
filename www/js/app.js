@@ -78,7 +78,12 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         url: '/tenant',
         templateUrl: 'templates/tenant/tenant.html',
         controller: 'tenantCtrl'
-      });      
+      })
+      .state('request-maintenance', {
+        url: '/tenant/request-maintenance',
+        templateUrl: 'templates/tenant/requestMaintenance.html',
+        controller: 'requestMaintenanceCtrl'
+      });            
   });
   
 

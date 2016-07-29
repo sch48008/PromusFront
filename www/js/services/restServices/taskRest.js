@@ -1,1 +1,36 @@
 angular.module("restServiceModule")
+    .service('taskRest', ['$http', function($http) {
+
+        var taskRest = this;
+        var url = 'https://promus-backend-bitflipper86.c9users.io/api/Tasks';
+
+
+        // register a new task
+        taskRest.register = function(taskData, token) {
+            return $http({
+                url: url,
+                method: 'POST',
+                data: taskData,
+                params: {access_token: token}
+            });
+        };
+
+        // get all tasks
+        taskRest.getFirms = function(token) {
+            return $http({
+                url: url,
+                method: 'GET',
+                params: {access_token: token}
+            });
+        };
+        
+        // get task given id
+        taskRest.getFirmById = function(id, token) {
+            return $http({
+                url: url,
+                method: 'GET',
+                params: {access_token: token, id: id}
+            });
+        };        
+        
+    }]);
