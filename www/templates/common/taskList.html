@@ -1,0 +1,11 @@
+<ion-view view-title="Task List">
+    <ion-content>
+        <ion-list>
+          <ion-item ng-repeat="task in displayTasks" ng-click="editTask(task.taskId)">
+              <div class="item item-divider">{{task.taskNumber}}:&nbsp &nbsp{{task.subject}}</div>
+              <div class="item">{{task.propertyName}}:&nbsp &nbsp{{task.createdBy}}</div>  
+              <div class="item">created:  {{task.created | date:'dd-MMM-yyyy'}}&nbsp &nbsp status={{task.status}}</div>                
+          </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

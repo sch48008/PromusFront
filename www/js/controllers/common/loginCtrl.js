@@ -42,7 +42,7 @@ angular.module('promusControllerModule')
                                             switch ($window.localStorage.userType)
                                             {
                                                 case "admin":
-                                                    $state.go('common');
+                                                    $state.go('admin');
                                                     break;
                                                 case "lead":
                                                     $state.go('lead');

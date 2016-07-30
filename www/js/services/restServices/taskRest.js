@@ -35,6 +35,19 @@ angular.module("restServiceModule")
                 method: 'GET',
                 params: {access_token: token}
             });
-        };        
+        };   
+        
+        // get tasks given firmId
+        taskRest.getTasksByFirmId = function(firmId, token) {
+            
+            // construct filter
+            var filter = "?filter[where][firmId]=" + firmId; 
+            
+            return $http({
+                url: url + filter,
+                method: 'GET',
+                params: {access_token: token}
+            });
+        };                
         
     }]);

@@ -12,7 +12,7 @@ angular.module('promusControllerModule')
             ($window.localStorage['userType'] === "lead") || ($window.localStorage['userType'] === "admin");               
             
             
-            // Logout function - called from template common.html
+            // Logout function
             $scope.logout = function() {
                 appUserRest.logout($window.localStorage.token)
                     .then(function(response) {

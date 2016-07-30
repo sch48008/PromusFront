@@ -49,11 +49,6 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         templateUrl: 'templates/common/codeUser.html',
         controller: 'codeUserCtrl'
       })                        
-      .state('common', {
-        url: '/common',
-        templateUrl: 'templates/common/common.html',
-        controller: 'commonCtrl'
-      })
       .state('admin', {
         url: '/admin',
         templateUrl: 'templates/admin/admin.html',
@@ -83,7 +78,12 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         url: '/tenant/request-maintenance',
         templateUrl: 'templates/tenant/requestMaintenance.html',
         controller: 'requestMaintenanceCtrl'
-      });            
+      })
+      .state('task-list', {
+        url: '/common/task-list',
+        templateUrl: 'templates/common/taskList.html',
+        controller: 'taskListCtrl'
+      });              
   });
   
 
