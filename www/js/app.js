@@ -49,10 +49,10 @@ angular.module('promus', ['ionic', 'promusControllerModule', 'restServiceModule'
         templateUrl: 'templates/common/codeUser.html',
         controller: 'codeUserCtrl'
       })                        
-      .state('lobby', {
-        url: '/lobby',
-        templateUrl: 'templates/common/lobby.html',
-        controller: 'lobbyCtrl'
+      .state('common', {
+        url: '/common',
+        templateUrl: 'templates/common/common.html',
+        controller: 'commonCtrl'
       })
       .state('admin', {
         url: '/admin',

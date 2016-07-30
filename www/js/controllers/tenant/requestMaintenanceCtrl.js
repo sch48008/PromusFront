@@ -35,7 +35,7 @@ angular.module('promusControllerModule')
                                         ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant.");
                                     }
                                 }, function(error) {
-                                    ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is: " + error.message);
+                                    ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is:   " + error.data.error.message);
                                 });                                
                         });
                         
@@ -43,11 +43,11 @@ angular.module('promusControllerModule')
                          ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant.");
                     }
                 }, function(error) {
-                    ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is: " + error.message);
+                    ssfAlertsService.showAlert("Error", "Error occurred getting properties for tenant. Error message is:   " + error.data.error.message);
                 });            
             
             
-            // add request
+            // add request (create task)
             $scope.requestMaintenance = function(form) {
                 
                 // generate a user-friendly 5-digit task number to help track the task
@@ -71,19 +71,14 @@ angular.module('promusControllerModule')
                 
 
                 $scope.request.created = Date.now();
-                
-                
-                
+
                 // transfer the propertyId from the select box
                 $scope.request.propertyId = $scope.temp.property.id;
-
-
 
                 // Check validity
                 if (form.$invalid) {
                     return ssfAlertsService.showAlert('Incomplete', 'Some fields are missing or incorrect.  Please see the form for errors.');
                 }
-
 
                 // Create task...
                 taskRest.create($scope.request, $window.localStorage.token)
@@ -98,7 +93,6 @@ angular.module('promusControllerModule')
                     }, function(error) {
                         ssfAlertsService.showAlert('Error', 'Error occurred creating the request. Error message is: ' + error.message);
                     });
-
             };
         }
     ]);

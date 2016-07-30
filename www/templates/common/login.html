@@ -1,21 +1,22 @@
 <ion-view view-title="Sign in">
     <ion-content class="padding">
-        <h3>Welcome to Promus!</h3>
+        <h4>Welcome to Promus!</h4>
         <br>
         <h4>Please sign in here:</h4>
         <form name="loginForm" ng-submit="loginUser(loginForm)" novalidate>
+            <h4>Email</h4>
             <label class="item item-input" ng-class="{ 'has-errors' : loginForm.email.$invalid && loginForm.$submitted}">
                     <input name="email" type="email" placeholder="Email" ng-model="user.email" required>
                 </label>
             <br/>
+            <h4>Password</h4>
             <label class="item item-input" ng-class="{ 'has-errors' : loginForm.password.$invalid && loginForm.$submitted}">
                     <input name="password" type="password" placeholder="Password" ng-model="user.password" required>
                 </label>
-            <br/>
             <input type="submit" value="Sign In" class="button button-block button-positive">
         </form>
         <br>
-        <h4>Not yet registered?  Please register here:</h4>
+        <h4>Not yet registered?</h4>
         <button class="button  button-block button-positive" ui-sref="register-user">Register</button>
     </ion-content>
 </ion-view>

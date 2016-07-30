@@ -26,11 +26,16 @@ angular.module("restServiceModule")
         
         // get firm given id
         firmRest.getFirmById = function(id, token) {
+            
+            // construct filter
+            var filter = "?filter[where][id]=" + id; 
+            
             return $http({
-                url: url,
+                url: url + filter,
                 method: 'GET',
-                params: {access_token: token, id: id}
+                params: {access_token: token}
             });
+            
         };        
         
     }]);

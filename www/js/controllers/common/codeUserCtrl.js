@@ -31,7 +31,7 @@ angular.module('promusControllerModule')
             // properties...needed in select property dropdown for tenants
             $scope.properties = [];            
             
-            // firms...needed in select firm dropdown
+            // firms...needed in select firm dropdown which is only needed when the the user is admin
             $scope.firms = [];
             
             // sort function to sort firms by name
@@ -42,37 +42,54 @@ angular.module('promusControllerModule')
                     return 1;
                 return 0;
             }
-
-            // get properties...needed in select property dropdown for tenants
-            propertyRest.getPropertiesByFirm($window.localStorage.firmId, $window.localStorage.token)
-                .then(function(response) {
-
-                    // handle different responses and decide what happens next...
-
-                    // if success
-                    if (response.status == 200) {
-                        $scope.properties = response.data;
-                        
-                        // sort
-                        $scope.properties.sort(compare);
-                    }
-                    else if (response.status == 404) {
-                        ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
-                    }
-                    else if (response.status == 500) {
-                        ssfAlertsService.showAlert("No Server Connection", "The server appears to be offline.");
-                    }
-                }, function(error) {
-
-                    ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
-
-                });            
             
+            // The 3 user types using this form are: admin, lead and manager.
+            // If the user is a lead or manager, the firmId for the purposes of getting properties is simply the user's firmId.
+            // Otherwise (if user is admin) we have to wait for the ng-change event of the select firm box.
+            if($window.localStorage.userType == "lead" || $window.localStorage.userType == "manager") {
+                
+                // go ahead and get the properties because we know the firm.
+                getProperties($window.localStorage.firmId, $window.localStorage.token);
+                
+            }
             
-            // properties...needed in select properties dropdown when userType...dummy for now
-            // $scope.properties = [{id:"xxxx", name:"Property1"}, {id:"yyyy", name:"Property2"}, {id:"zzzz", name:"Property3"}];            
 
+            // function get properties...needed in select property dropdown for tenants
+            function getProperties(firmId, token){
+                
+                propertyRest.getPropertiesByFirm(firmId, token)
+                    .then(function(response) {
+    
+                        // handle different responses and decide what happens next...
+    
+                        // if success
+                        if (response.status == 200) {
+                            $scope.properties = response.data;
+                            
+                            // sort
+                            $scope.properties.sort(compare);
+                        }
+                        else if (response.status == 404) {
+                            ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
+                        }
+                        else if (response.status == 500) {
+                            ssfAlertsService.showAlert("No Server Connection", "The server appears to be offline.");
+                        }
+                    }, function(error) {
+    
+                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is:   " + error.data.error.message);
+    
+                    });                    
+            }
+            
+            // called when user changes the "firm" select box
+            $scope.setProperties = function(){
+                
+                getProperties($scope.temp.firm.id, $window.localStorage.token);
 
+            };
+        
+            
             // get firms...needed in select firm dropdown
             firmRest.getFirms($window.localStorage.token)
                 .then(function(response) {
@@ -94,7 +111,7 @@ angular.module('promusControllerModule')
                     }
                 }, function(error) {
 
-                    ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
+                    ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is:   " + error.data.error.message);
 
                 });
                 
@@ -175,7 +192,7 @@ angular.module('promusControllerModule')
                         }
                     }, function(error) {
 
-                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
+                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is:   " + error.data.error.message);
 
                     });
             };

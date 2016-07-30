@@ -127,16 +127,16 @@ angular.module('promusControllerModule')
                                     ssfAlertsService.showAlert("Success", "The firm " +  $scope.firm.name + " was successfully registered.");
     
                                 }, function(error) {
-                                    ssfAlertsService.showAlert("Error", "Error occurred registering firm. Error message is: " + error.message);
+                                    ssfAlertsService.showAlert("Error", "Error occurred registering firm. Error message is:   " + error.data.error.message);
                                 });
 
 
                             }, function(error) {
-                                ssfAlertsService.showAlert("Error", "Error occurred adding address to database. Error message is: " + error.message);
+                                ssfAlertsService.showAlert("Error", "Error occurred adding address to database. Error message is:   " + error.data.error.message);
                             });
                     
                     }, function(error) {
-                        ssfAlertsService.showAlert("Error", "Error occurred getting registration code. Error message is: " + error.message);
+                        ssfAlertsService.showAlert("Error", "Error occurred getting registration code. Error message is:   " + error.data.error.message);
                     });                    
             };
         }

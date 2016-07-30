@@ -45,7 +45,7 @@ angular.module('promusControllerModule')
                         }
                     }, function(error) {
 
-                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
+                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is:   " + error.data.error.message);
 
                     });
             };

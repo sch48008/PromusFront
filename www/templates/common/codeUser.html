@@ -2,13 +2,6 @@
     <ion-content class="padding">
         <form name="codeForm" ng-submit="createCode(codeForm)" novalidate>
 
-            <!--row 1-->
-            <div class="row">
-                <div class="col col-100 padding">
-                    Select the user's firm and user type. Enter the user's email, generate new code, and submit. You must also select the property if the user type is tenant.
-                </div>
-            </div>
-
             <!--select firm-->
             <div class="row" ng-show="isAdmin">
                 <div class="col col-100 padding">
@@ -18,7 +11,7 @@
                         Firm
                         </div>
                         <!--take note of the syntax of the ng-options directive.  Must be exactly like this.-->
-                        <select name= "selectFirm" ng-model="temp.firm" ng-options="firm as firm.name for firm in firms track by firm.id">
+                        <select name= "selectFirm" ng-model="temp.firm" ng-change="setProperties()" ng-options="firm as firm.name for firm in firms track by firm.id">
                             <option value="" disabled ng-selected = true>Select firm...</option>  
                         </select>
                         </label>

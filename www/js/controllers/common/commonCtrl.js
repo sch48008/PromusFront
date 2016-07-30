@@ -1,5 +1,5 @@
 angular.module('promusControllerModule')
-    .controller('lobbyCtrl', ['$scope', '$state', '$window', '$ionicHistory', 'appUserRest', 'ssfAlertsService',
+    .controller('commonCtrl', ['$scope', '$state', '$window', '$ionicHistory', 'appUserRest', 'ssfAlertsService',
         function($scope, $state, $window, $ionicHistory, appUserRest, ssfAlertsService) {
             
             
@@ -12,7 +12,7 @@ angular.module('promusControllerModule')
             ($window.localStorage['userType'] === "lead") || ($window.localStorage['userType'] === "admin");               
             
             
-            // Logout function - called from template lobby.html
+            // Logout function - called from template common.html
             $scope.logout = function() {
                 appUserRest.logout($window.localStorage.token)
                     .then(function(response) {

@@ -15,8 +15,6 @@ angular.module('promusControllerModule')
                     appUserRest.login($scope.user)
                         .then(function(response) {
 
-                            // handle different login responses and decide what happens next...
-
                             // if success
                             if (response.status == 200) {
 
@@ -25,13 +23,12 @@ angular.module('promusControllerModule')
                                 $window.localStorage.userId = response.data.userId;
 
 
-                                // we also need to get the user model instance and store some user info locally
+                                // get the user model instance and store some user info locally
                                 appUserRest.getUserById($window.localStorage.userId, $window.localStorage.token)
                                     .then(function(response) {
 
                                         // handle different responses and decide what happens next...
 
-                                        // if success
                                         if (response.status == 200) {
 
                                             // store a subset of user information
@@ -41,31 +38,45 @@ angular.module('promusControllerModule')
                                             $window.localStorage.lastName = response.data[0].lastName;
                                             $window.localStorage.preferredContactMethod = response.data[0].preferredContactMethod;
                                             
-
-                                            // take user to the lobby
-                                            $state.go('lobby');
+                                            // navigation depends on user type
+                                            switch ($window.localStorage.userType)
+                                            {
+                                                case "admin":
+                                                    $state.go('common');
+                                                    break;
+                                                case "lead":
+                                                    $state.go('lead');
+                                                    break;
+                                                case "manager":
+                                                    $state.go('manager');
+                                                    break;
+                                                case "tenant":
+                                                    $state.go('tenant');
+                                                    break;                                                    
+                                            }                                            
                                         }
                                         else if (response.status == 404) {
-
                                             ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
-
                                         }
                                     }, function(error) {
-
-                                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
-
+                                        ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is:   " + error.data.error.message);
                                     });
-
                             }
+                            else if (response.status == 401) {
+                                ssfAlertsService.showAlert("Login Failed", "Please retype username and password.");
+                            }                            
                             else if (response.status == 404) {
-
                                 ssfAlertsService.showAlert("No Server Connection", "Could not connect to server.");
-
                             }
                         }, function(error) {
-
-                            ssfAlertsService.showAlert("Unknown Error", "Error occurred. Error message is: " + error.message);
-
+                            
+                            if(error.data.error.status == 401)
+                            {
+                                ssfAlertsService.showAlert("Login Failed", "Please retype username and password.");
+                            }
+                            else{
+                                ssfAlertsService.showAlert("Error Occurred", "Error message is:   " + error.data.error.message);
+                            }
                         });
                 }
             };
