@@ -35,7 +35,7 @@ angular.module("restServiceModule")
         };        
         
 
-        // logout - TODO: not yet implemented in controller
+        // logout method
         appUserRest.logout = function(token) {
             return $http({
                 url: url + "/logout",
@@ -44,5 +44,5 @@ angular.module("restServiceModule")
                     'Authorization': token
                 }
             });
-        };
+        };        
     }]);
